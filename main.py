@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Body
 from fastapi.responses import HTMLResponse
 
 
@@ -59,3 +59,16 @@ def get_movie(id: int):
 @app.get('/movies/', tags=['movies'])
 def get_movies_by_category(category: str, year: str):
     return [movie for movie in movies if movie['category'] == category and movie['year'] == year]
+
+@app.post('/movies', tags = ['movies'])
+def create_movie(id: int = Body(), title: str = Body(), overview: str = Body(),
+                 year:str = Body(), rating: float = Body(), category: str = Body()):
+    movies.append({
+        'id': id,
+        'title': title,
+        'overview': overview,
+        'year': year,
+        'rating': rating,
+        'category': category
+    })
+    return movies
